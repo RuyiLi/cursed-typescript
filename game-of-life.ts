@@ -110,9 +110,11 @@ type JoinRow<Row extends Cell[], S extends string = ''> =
   ? JoinRow<R, `${S}${L}`>
   : S
 
-type PrintBoard<BoardState extends Board, LineSep extends string = '|', S extends string = ''> = 
+type PrintBoard<BoardState extends Board, LineSep extends string = '\n', S extends string = ''> = 
   BoardState extends [infer CurrRow extends Cell[], ...infer NextRows extends Board]
-  ? PrintBoard<NextRows, LineSep, `${S}${LineSep}${JoinRow<CurrRow>}`>
+  ? S extends ''
+    ? PrintBoard<NextRows, LineSep, JoinRow<CurrRow>>
+    : PrintBoard<NextRows, LineSep, `${S}${LineSep}${JoinRow<CurrRow>}`>
   : S
 
 type StringToBoard<S extends string, CurrBoard extends Board = [], CurrRow extends Cell[] = []> =
@@ -129,6 +131,8 @@ type StringToBoard<S extends string, CurrBoard extends Board = [], CurrRow exten
 // Test Cases
 // Hover over the type names to see the output
 
+// https://conwaylife.com/wiki/Blinker
+// Period 2
 type Blinker = StringToBoard<`
 ...
 xxx
@@ -140,6 +144,8 @@ type PBlinker2 = PrintBoard<Evolve<Blinker>>
 type PBlinker3 = PrintBoard<EvolveN<Blinker, 2>>
 type PBlinker4 = PrintBoard<EvolveN<Blinker, 3>>
 
+// https://conwaylife.com/wiki/Gosper_glider_gun
+// Period 30
 type GosperGliderGun = StringToBoard<`
 ........................................
 .........................x..............
@@ -147,12 +153,43 @@ type GosperGliderGun = StringToBoard<`
 .............xx......xx..............xx.
 ............x...x....xx..............xx.
 .xx........x.....x...xx.................
-.xx........x...x.xx....x................
+.xx........x...x.xx....x.x..............
 ...........x.....x.......x..............
-............x...x........x..............
+............x...x.......................
 .............xx.........................
 ........................................
 `>
 
 type PGun1 = PrintBoard<GosperGliderGun>
-type PGun2 = PrintBoard<EvolveN<GosperGliderGun, 30>>
+type PGun2 = PrintBoard<EvolveN<GosperGliderGun, 1>>
+type PGun3 = PrintBoard<EvolveN<GosperGliderGun, 2>>
+type PGun4 = PrintBoard<EvolveN<GosperGliderGun, 3>>
+type PGun5 = PrintBoard<EvolveN<GosperGliderGun, 4>>
+type PGun6 = PrintBoard<EvolveN<GosperGliderGun, 5>>
+type PGun7 = PrintBoard<EvolveN<GosperGliderGun, 6>>
+type PGun8 = PrintBoard<EvolveN<GosperGliderGun, 7>>
+type PGun9 = PrintBoard<EvolveN<GosperGliderGun, 8>>
+type PGun10 = PrintBoard<EvolveN<GosperGliderGun, 9>>
+type PGun11 = PrintBoard<EvolveN<GosperGliderGun, 10>>
+type PGun12 = PrintBoard<EvolveN<GosperGliderGun, 11>>
+type PGun13 = PrintBoard<EvolveN<GosperGliderGun, 12>>
+type PGun14 = PrintBoard<EvolveN<GosperGliderGun, 13>>
+type PGun15 = PrintBoard<EvolveN<GosperGliderGun, 14>>
+type PGun16 = PrintBoard<EvolveN<GosperGliderGun, 15>>
+type PGun17 = PrintBoard<EvolveN<GosperGliderGun, 16>>
+type PGun18 = PrintBoard<EvolveN<GosperGliderGun, 17>>
+type PGun19 = PrintBoard<EvolveN<GosperGliderGun, 18>>
+type PGun20 = PrintBoard<EvolveN<GosperGliderGun, 19>>
+type PGun21 = PrintBoard<EvolveN<GosperGliderGun, 20>>
+type PGun22 = PrintBoard<EvolveN<GosperGliderGun, 21>>
+type PGun23 = PrintBoard<EvolveN<GosperGliderGun, 22>>
+type PGun24 = PrintBoard<EvolveN<GosperGliderGun, 23>>
+type PGun25 = PrintBoard<EvolveN<GosperGliderGun, 24>>
+type PGun26 = PrintBoard<EvolveN<GosperGliderGun, 25>>
+type PGun27 = PrintBoard<EvolveN<GosperGliderGun, 26>>
+type PGun28 = PrintBoard<EvolveN<GosperGliderGun, 27>>
+type PGun29 = PrintBoard<EvolveN<GosperGliderGun, 28>>
+type PGun30 = PrintBoard<EvolveN<GosperGliderGun, 29>>
+type PGun31 = PrintBoard<EvolveN<GosperGliderGun, 30>>
+type PGun32 = PrintBoard<EvolveN<GosperGliderGun, 31>>
+
