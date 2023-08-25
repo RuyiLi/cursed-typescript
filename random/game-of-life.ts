@@ -1,3 +1,5 @@
+import type { Equals } from '../util'
+
 type Cell = 'x' | '.'
 type Board = Cell[][]
 
@@ -5,10 +7,6 @@ type ValidIndex<Arr extends unknown[]> =
   Exclude<keyof Arr, Exclude<keyof Arr, `${number}`>> extends `${infer N extends number}`
   ? N
   : never
-
-type Equals<X, Y> =
-  (<T>() => T extends X ? 1 : 2) extends
-  (<T>() => T extends Y ? 1 : 2) ? true : false;
 
 // Doesn't handle negative or decimal cases
 // It's annoying to handle the never case, so I'm using -1 as a sentinel value instead
