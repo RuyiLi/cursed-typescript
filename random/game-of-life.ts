@@ -12,7 +12,7 @@ type ValidIndex<Arr extends unknown[]> =
 // Doesn't handle negative or decimal cases
 // It's annoying to handle the never case, so I'm using -1 as a sentinel value instead
 type Sub1<N extends number, C extends 0[] = []> =
-  true extends Equals<N, 0> | Equals<N, number> 
+  true extends Equals<N, 0> | Equals<N, number>
   ? -1
   : N extends [...C, 0]['length']
     ? C['length']
@@ -55,7 +55,7 @@ type CellState<BoardState extends Board, X extends ColIndexOf<BoardState>, Y ext
     IsLive<BoardState, Add1<X, ColIndexOf<BoardState>>, Add1<Y, RowIndexOf<BoardState>>>,
     IsLive<BoardState, X, Add1<Y, RowIndexOf<BoardState>>>,
     IsLive<BoardState, Sub1<X>, Add1<Y, RowIndexOf<BoardState>>>,
-    IsLive<BoardState, Sub1<X>, Y>
+    IsLive<BoardState, Sub1<X>, Y>,
   ]>
 
 type EvolveCell<BoardState extends Board, X extends ColIndexOf<BoardState>, Y extends RowIndexOf<BoardState>> =
@@ -88,7 +88,7 @@ type Evolve<
   OrigBoardState extends Board,
   CurrBoardState extends Board = [],
   CY extends 0[] = [],
-> = 
+> =
   CY['length'] extends RowIndexOf<OrigBoardState>
   ? Evolve<OrigBoardState, [...CurrBoardState, EvolveRow<OrigBoardState, CY['length']>], [...CY, 0]>
   : CurrBoardState
@@ -105,7 +105,7 @@ type ColIndexOf<BoardState extends Board> = ValidIndex<BoardState[number]>
 // ======== BEGIN TESTING =========
 // ================================
 
-// Testing Utilities
+// Testing utilities
 
 type JoinRow<Row extends Cell[], S extends string = ''> =
   Row extends [infer L extends Cell, ...infer R extends Cell[]]
@@ -130,7 +130,7 @@ type StringToBoard<S extends string, CurrBoard extends Board = [], CurrRow exten
       : StringToBoard<R, CurrBoard, CurrRow>
   : CurrBoard
 
-// Test Cases
+// Test cases
 // Hover over the type names to see the output
 
 // https://conwaylife.com/wiki/Blinker
@@ -146,8 +146,6 @@ type PBlinker2 = PrintBoard<Evolve<Blinker>>
 type PBlinker3 = PrintBoard<EvolveN<Blinker, 2>>
 type PBlinker4 = PrintBoard<EvolveN<Blinker, 3>>
 
-// https://conwaylife.com/wiki/Gosper_glider_gun
-// Period 30
 // https://conwaylife.com/wiki/Gosper_glider_gun
 // Period 30
 type GosperGliderGun = StringToBoard<`
@@ -170,7 +168,7 @@ type GosperGliderGun = StringToBoard<`
 `>
 
 type PGun1 = PrintBoard<GosperGliderGun>
-// type PGun2 = PrintBoard<EvolveN<GosperGliderGun, 1>>
+type PGun2 = PrintBoard<EvolveN<GosperGliderGun, 1>>
 // type PGun3 = PrintBoard<EvolveN<GosperGliderGun, 2>>
 // type PGun4 = PrintBoard<EvolveN<GosperGliderGun, 3>>
 // type PGun5 = PrintBoard<EvolveN<GosperGliderGun, 4>>
